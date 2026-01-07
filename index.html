@@ -17,9 +17,20 @@
         .scrollbar-thin::-webkit-scrollbar { width: 4px; }
         .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
         .scrollbar-thin::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        @keyframes scanline {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(100%); }
+        }
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(34, 211, 238, 0.1);
+            position: absolute;
+            animation: scanline 4s linear infinite;
+        }
     </style>
 </head>
-<body>
+<body class="bg-slate-950">
     <div id="root"></div>
 
     <script type="text/babel">
@@ -154,6 +165,7 @@
                     <div className="relative z-10 w-full max-w-3xl flex flex-col shadow-2xl animate-in fade-in zoom-in duration-500">
                         
                         <div className="w-full h-32 sm:h-44 overflow-hidden rounded-t-lg border-x border-t border-slate-800 bg-slate-900 relative">
+                            <div className="scanline"></div>
                             <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:20px_20px]"></div>
                             <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 to-transparent"></div>
                             
@@ -165,7 +177,7 @@
                                     e.target.style.display = 'none';
                                     const parent = e.target.parentElement;
                                     const fallback = document.createElement('div');
-                                    fallback.className = "absolute inset-0 flex items-center justify-center";
+                                    fallback.className = "absolute inset-0 flex items-center justify-center bg-slate-900";
                                     fallback.innerHTML = `<span class="text-cyan-500/30 font-black text-4xl tracking-[0.5em] uppercase italic">Nakaminsky</span>`;
                                     parent.appendChild(fallback);
                                 }}
@@ -202,7 +214,7 @@
 
                                 <button 
                                     onClick={() => triggerCommand("FONCTIONNEMENT", [
-                                        "⚙️ Nous utilisons le module de copy trading de notre exchange partenaire, il s'agit d'un systeme de duplication de trade en temps réel sur votre compte.",
+                                        "⚙️ Nous utilisons le module de copy trading de notre exchange partenaire, il s'agit d'un système de duplication de trade en temps réel sur votre compte.",
                                         "✋ Vous avez donc la main sur les positions en cours, vous pouvez ajuster le SL/TP, renforcer votre position ou bien la clôturer quand vous souhaitez.",
                                         "🤗 Vous restez maître de votre capital, nous n'avons pas accès à vos fonds (vous pouvez stopper le copy et effectuer un retrait à tout moment)"
                                     ])}
@@ -262,7 +274,7 @@
                     </div>
 
                     <div className="mt-6 flex flex-col items-center gap-3">
-                        <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-full py-2 px-6">
+                        <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-full py-2 px-6 text-center">
                             <span className="text-cyan-400 font-bold text-[10px] tracking-[0.4em] uppercase">
                                 Accès VIP + Copy Auto = 450$ / 3 Mois
                             </span>
