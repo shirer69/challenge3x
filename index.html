@@ -57,6 +57,11 @@
             border-bottom: 1px solid #1e293b;
             white-space: nowrap;
         }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
     </style>
 </head>
 <body class="bg-slate-950">
@@ -87,6 +92,10 @@
 
         const BarChartIcon = ({ size = 14, className = "" }) => (
             <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
+        );
+
+        const CalculatorIcon = ({ size = 14, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="14" x2="16" y2="18"/><path d="M16 10h.01"/><path d="M12 10h.01"/><path d="M8 10h.01"/><path d="M12 14h.01"/><path d="M8 14h.01"/><path d="M12 18h.01"/><path d="M8 18h.01"/></svg>
         );
 
         const ChallengeChrono = ({ startDate }) => {
@@ -143,7 +152,9 @@
         const App = () => {
             const [viewImage, setViewImage] = useState(null);
             const [daysElapsed, setDaysElapsed] = useState(0);
+            const [investment, setInvestment] = useState(1000);
             const startDateStr = "2026-01-15T00:00:00";
+            const performanceRate = 0.2172; // +21.72%
 
             useEffect(() => {
                 const calculateDays = () => {
@@ -165,6 +176,9 @@
                 setViewImage(null);
             };
 
+            const profitGenerated = investment * performanceRate;
+            const totalCapital = investment + profitGenerated;
+
             return (
                 <div className="min-h-screen bg-slate-950 text-slate-200 font-mono p-4 flex flex-col items-center justify-center overflow-x-hidden">
                     
@@ -180,29 +194,8 @@
 
                     <div className="relative z-10 w-full max-w-6xl flex flex-col shadow-2xl animate-in fade-in zoom-in duration-500 py-4 sm:py-6">
                         
-                        {/* Bannière Header avec Logo Redimensionné à gauche */}
-                        <div className="w-full h-24 sm:h-32 overflow-hidden rounded-t-lg border-x border-t border-slate-800 bg-slate-900 relative shrink-0 flex items-center p-4 sm:p-6">
-                            <div className="scanline"></div>
-                            <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:20px_20px]"></div>
-                            <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 to-transparent"></div>
-                            
-                            <img 
-                                src="logo.png" 
-                                alt="Logo Nakaminsky" 
-                                className="relative z-10 h-full w-auto object-contain max-h-16 sm:max-h-24"
-                                onError={(e) => {
-                                    e.target.style.display = 'none';
-                                    const parent = e.target.parentElement;
-                                    const fallback = document.createElement('div');
-                                    fallback.className = "relative z-10 flex items-center";
-                                    fallback.innerHTML = `<span class="text-cyan-400 font-black text-2xl sm:text-4xl tracking-tighter uppercase italic glow-text">Nakaminsky</span>`;
-                                    parent.appendChild(fallback);
-                                }}
-                            />
-                        </div>
-
                         {/* Conteneur Principal */}
-                        <div className="relative w-full bg-slate-900/90 border border-slate-800 rounded-b-lg backdrop-blur-xl overflow-hidden flex flex-col h-[92vh] min-h-[900px]">
+                        <div className="relative w-full bg-slate-900/90 border border-slate-800 rounded-lg backdrop-blur-xl overflow-hidden flex flex-col h-[92vh] min-h-[900px]">
                             
                             {/* Header Status */}
                             <div className="bg-slate-800/50 p-3 border-b border-slate-700 flex justify-between items-center shrink-0">
@@ -225,7 +218,7 @@
                                 </div>
                             </div>
 
-                            {/* Contenu Terminal (Tableau + Résumé sans espace) */}
+                            {/* Contenu Terminal (Tableau + Résumé) */}
                             <div className="flex-1 overflow-auto scrollbar-thin bg-black/40">
                                 <table className="trading-table">
                                     <thead className="sticky top-0 z-20">
@@ -236,7 +229,6 @@
                                             <th>Pair</th>
                                             <th>Size</th>
                                             <th>Price</th>
-                                            <th>Amount</th>
                                             <th>Leverage</th>
                                             <th>PnL (%)</th>
                                             <th>PnL (Capital)</th>
@@ -251,7 +243,6 @@
                                             <td className="font-bold text-white">AXS/USDT</td>
                                             <td>18400.004600</td>
                                             <td>$2.1450</td>
-                                            <td>$2000.00</td>
                                             <td>20x cross</td>
                                             <td><span className="text-emerald-400 font-bold">+26.60%</span></td>
                                             <td><span className="text-emerald-400 font-black text-xs">+2.54%</span></td>
@@ -268,8 +259,7 @@
                                             <td className="font-bold text-white uppercase">AXS/ USDT</td>
                                             <td>23074.267761</td>
                                             <td>$2.1620</td>
-                                            <td>$1000.00</td>
-                                            <td>50x cross</td>
+                                            <td>50xcross</td>
                                             <td><span className="text-emerald-400 font-bold">+11.34%</span></td>
                                             <td><span className="text-emerald-400 font-black text-xs">+1.07%</span></td>
                                             <td>
@@ -285,7 +275,6 @@
                                             <td className="font-bold text-white">PUMP/USDT</td>
                                             <td>53417628.238864</td>
                                             <td>$0.0025</td>
-                                            <td>$2000.00</td>
                                             <td>65x cross</td>
                                             <td><span className="text-emerald-400 font-bold">+169.19%</span></td>
                                             <td><span className="text-emerald-400 font-black text-xs">+14.08%</span></td>
@@ -302,7 +291,6 @@
                                             <td className="font-bold text-white">BTC / USDT</td>
                                             <td>3.148379</td>
                                             <td>$94485.9000</td>
-                                            <td>$5000.00</td>
                                             <td>60x isolated</td>
                                             <td><span className="text-emerald-400 font-bold">+50.45%</span></td>
                                             <td><span className="text-emerald-400 font-black text-xs">+4.04%</span></td>
@@ -321,10 +309,23 @@
                                         <BarChartIcon className="text-emerald-400" />
                                         <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-300">Résumé du Challenge</h3>
                                     </div>
-                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                        <div className="bg-slate-950/50 p-4 rounded border border-slate-800/50">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                        <div className="bg-slate-950/50 p-4 rounded border border-slate-800/50 flex flex-col justify-center">
                                             <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Stratégie de Risque</div>
-                                            <div className="text-xs text-slate-300 font-medium italic">Intérêts composés : Allocation de <span className="text-cyan-400 font-bold">8% du capital actuel</span> par trade.</div>
+                                            <div className="text-xs text-slate-300 font-medium italic leading-relaxed">Allocation de <span className="text-cyan-400 font-bold">8% du capital</span> par trade.</div>
+                                        </div>
+                                        <div className="bg-slate-950/50 p-4 rounded border border-slate-800/50 flex flex-col justify-center">
+                                            <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Statistiques</div>
+                                            <div className="flex gap-4">
+                                                <div>
+                                                    <div className="text-[9px] text-slate-600 uppercase">Trades</div>
+                                                    <div className="text-lg font-black text-white">4</div>
+                                                </div>
+                                                <div>
+                                                    <div className="text-[9px] text-slate-600 uppercase">Winrate</div>
+                                                    <div className="text-lg font-black text-emerald-400">100%</div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div className="bg-rose-950/20 p-4 rounded border border-rose-500/20 flex flex-col justify-center">
                                             <div className="text-[10px] text-rose-500 uppercase font-bold mb-1">Drawdown Max</div>
@@ -332,14 +333,57 @@
                                         </div>
                                         <div className="bg-emerald-950/20 p-4 rounded border border-emerald-500/20 flex flex-col justify-center">
                                             <div className="text-[10px] text-emerald-500 uppercase font-bold mb-1">Performance Cumulée</div>
-                                            <div className="text-2xl font-black text-emerald-400 glow-text">+21.72% <span className="text-xs font-normal text-slate-500 uppercase tracking-tighter ml-1">DE PROFIT SUR CAPITAL EN {daysElapsed} JOURS</span></div>
+                                            <div className="text-2xl font-black text-emerald-400 glow-text">+21.72% <span className="text-[9px] font-normal text-slate-500 uppercase tracking-tighter block leading-none mt-1">DE PROFIT SUR CAPITAL EN {daysElapsed} JOURS</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Simulateur de Capital */}
+                                <div className="bg-slate-900/95 border-t border-slate-800 p-6 border-b border-slate-800">
+                                    <div className="flex items-center gap-2 mb-6">
+                                        <CalculatorIcon className="text-cyan-400" />
+                                        <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-300">Simulateur de profit</h3>
+                                    </div>
+                                    
+                                    <div className="flex flex-col md:flex-row gap-8 items-start">
+                                        <div className="w-full md:w-1/3">
+                                            <label className="text-[10px] text-slate-500 uppercase font-bold block mb-2 tracking-widest">
+                                                Investissement de départ (USDT $)
+                                            </label>
+                                            <div className="relative group">
+                                                <input 
+                                                    type="number" 
+                                                    value={investment}
+                                                    onChange={(e) => setInvestment(Number(e.target.value))}
+                                                    className="w-full bg-slate-950 border border-slate-700 p-4 rounded text-white font-black text-xl focus:border-cyan-500 focus:outline-none transition-all"
+                                                    placeholder="0.00"
+                                                />
+                                                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-600 font-bold text-xs">$</div>
+                                            </div>
+                                        </div>
+
+                                        <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+                                            <div className="bg-slate-800/20 p-4 rounded border border-slate-700/50">
+                                                <div className="text-[9px] text-slate-500 uppercase font-bold mb-1 tracking-tighter">Profit généré en {daysElapsed} jours</div>
+                                                <div className="text-xl font-black text-emerald-400 tabular-nums">
+                                                    + {profitGenerated.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} $
+                                                </div>
+                                                <div className="text-[9px] text-emerald-500/60 italic uppercase mt-1 tracking-tighter">Basé sur +21.72% de ROI actuel</div>
+                                            </div>
+                                            <div className="bg-cyan-950/10 p-4 rounded border border-cyan-500/20">
+                                                <div className="text-[9px] text-cyan-500 uppercase font-bold mb-1 tracking-tighter">Capital Total actuel</div>
+                                                <div className="text-xl font-black text-white tabular-nums">
+                                                    {totalCapital.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} $
+                                                </div>
+                                                <div className="text-[9px] text-slate-600 italic uppercase mt-1 tracking-tighter">Investissement + Profit</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div className="p-4 bg-slate-950/50 border-t border-slate-800 flex flex-col items-center gap-4 shrink-0">
-                                <a href="https://t.me/nakaminsky" target="_blank" rel="noopener noreferrer" className="w-full max-w-sm bg-cyan-600 hover:bg-cyan-500 text-white text-[11px] font-black py-4 rounded transition-all flex items-center justify-center gap-3 uppercase tracking-[0.2em] shadow-lg shadow-cyan-900/40 active:scale-95 glow-text btn-glow">
+                                <a href="https://t.me/nakaminsky" target="_blank" rel="noopener noreferrer" className="w-full max-sm bg-cyan-600 hover:bg-cyan-500 text-white text-[11px] font-black py-4 rounded transition-all flex items-center justify-center gap-3 uppercase tracking-[0.2em] shadow-lg shadow-cyan-900/40 active:scale-95 glow-text btn-glow">
                                     <Zap size={16} fill="currentColor" className="animate-pulse" /> JE SOUHAITE INVESTIR
                                 </a>
                                 <div className="w-full flex justify-center gap-6 text-[9px] text-slate-500 tracking-[0.2em] uppercase">
@@ -358,7 +402,7 @@
                                     <button onClick={handleCloseImage} className="bg-black/50 hover:bg-black/80 text-white p-1.5 rounded-full transition-colors"><XIcon size={20} /></button>
                                 </div>
                                 <div className="p-4 flex flex-col items-center justify-center min-h-[300px]">
-                                    <img src={viewImage} alt="Preuve PnL" className="w-full h-auto max-h-[85vh] object-contain rounded shadow-lg" onError={(e) => {
+                                    <img src={viewImage} alt="Screen PnL" className="w-full h-auto max-h-[85vh] object-contain rounded shadow-lg" onError={(e) => {
                                         e.target.style.display = 'none';
                                         const errorMsg = document.createElement('div');
                                         errorMsg.className = "flex flex-col items-center gap-4 p-8 text-center";
