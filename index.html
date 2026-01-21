@@ -135,7 +135,7 @@
 
             return (
                 <div className="flex flex-col items-center bg-slate-900/40 py-4 border-b border-slate-800 shrink-0">
-                    <div className="text-[10px] text-slate-400 uppercase tracking-[0.3em] mb-3 font-bold">Temps écoulé du Challenge</div>
+                    <div className="text-[10px] text-slate-400 uppercase tracking-[0.3em] mb-3 font-bold">Challenge démarré depuis</div>
                     <div className="flex items-center justify-center">
                         <TimeUnit value={timeElapsed.days} label="Jours" />
                         <div className="text-2xl sm:text-4xl text-slate-700 pb-4">:</div>
@@ -227,11 +227,11 @@
                                         <tr>
                                             <th>Date</th>
                                             <th>Type</th>
-                                            <th>Side</th>
-                                            <th>Pair</th>
+                                            <th>Sens</th>
+                                            <th>Actif</th>
                                             <th>% du capital</th>
                                             <th>Price</th>
-                                            <th>Leverage</th>
+                                            <th>Levier</th>
                                             <th>PnL (%)</th>
                                             <th>PnL (Capital)</th>
                                             <th>Screen</th>
@@ -335,7 +335,7 @@
                                         </div>
                                         <div className="bg-emerald-950/20 p-4 rounded border border-emerald-500/20 flex flex-col justify-center">
                                             <div className="text-[10px] text-emerald-500 uppercase font-bold mb-1">Performance Cumulée</div>
-                                            <div className="text-2xl font-black text-emerald-400 glow-text">+36.24% <span className="text-[9px] font-normal text-slate-500 uppercase tracking-tighter block leading-none mt-1">DE PROFIT SUR CAPITAL EN <span className="text-cyan-400 text-lg font-black">{daysElapsed}</span> JOURS</span></div>
+                                            <div className="text-2xl font-black text-emerald-400 glow-text">+36.24% <span className="text-[9px] font-normal text-slate-500 uppercase tracking-tighter block leading-none mt-1">DE PROFIT SUR CAPITAL <span className="text-cyan-400 text-lg font-black uppercase tracking-normal">EN {daysElapsed} JOURS</span></span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -366,11 +366,11 @@
 
                                         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
                                             <div className="bg-slate-800/20 p-4 rounded border border-slate-700/50">
-                                                <div className="text-[10px] text-slate-500 uppercase font-bold mb-1 tracking-tighter">Profit généré en <span className="text-cyan-400 text-lg font-black">{daysElapsed}</span> jours</div>
-                                                <div className="text-xl font-black text-cyan-400 tabular-nums glow-text">
+                                                <div className="text-[10px] text-slate-500 uppercase font-bold mb-1 tracking-tighter">Profit généré <span className="text-cyan-400 text-lg font-black uppercase tracking-normal">en {daysElapsed} jours</span></div>
+                                                <div className="text-xl font-black text-emerald-400 tabular-nums glow-text leading-none mt-1">
                                                     + {profitGenerated.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} $
                                                 </div>
-                                                <div className="text-[9px] text-cyan-500/60 italic uppercase mt-1 tracking-tighter">Basé sur +36.24% de ROI actuel</div>
+                                                <div className="text-[9px] text-emerald-500/60 italic uppercase mt-1 tracking-tighter">Basé sur +36.24% de ROI actuel</div>
                                             </div>
                                             <div className="bg-cyan-950/10 p-4 rounded border border-cyan-500/20">
                                                 <div className="text-[9px] text-cyan-500 uppercase font-bold mb-1 tracking-tighter">Capital Total actuel</div>
