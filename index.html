@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nakaminsky // CHALLENGE x3 N°1</title>
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com/"></script>
     <!-- React & ReactDOM CDN -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -14,9 +14,10 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700;800&display=swap');
         body { font-family: 'JetBrains Mono', monospace; }
-        .scrollbar-thin::-webkit-scrollbar { width: 4px; }
-        .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+        .scrollbar-thin::-webkit-scrollbar { height: 6px; width: 6px; }
+        .scrollbar-thin::-webkit-scrollbar-track { background: #0f172a; }
         .scrollbar-thin::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
+        .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #334155; }
         @keyframes scanline {
             0% { transform: translateY(-100%); }
             100% { transform: translateY(100%); }
@@ -34,6 +35,27 @@
         .btn-glow:hover {
             box-shadow: 0 0 20px rgba(8, 145, 178, 0.4);
         }
+        .trading-table {
+            border-collapse: separate;
+            border-spacing: 0;
+        }
+        .trading-table th {
+            font-weight: 800;
+            color: #94a3b8;
+            text-transform: uppercase;
+            font-size: 10px;
+            letter-spacing: 0.1em;
+            text-align: left;
+            padding: 14px 16px;
+            border-bottom: 1px solid #1e293b;
+            background: #0f172a;
+        }
+        .trading-table td {
+            padding: 16px;
+            font-size: 11px;
+            border-bottom: 1px solid #1e293b;
+            white-space: nowrap;
+        }
     </style>
 </head>
 <body class="bg-slate-950">
@@ -45,48 +67,50 @@
         const Cpu = ({ size = 18, className = "" }) => (
             <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/></svg>
         );
+
         const Zap = ({ size = 14, className = "" }) => (
             <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M4 14.75 12 3l1 9.25H20L12 21l-1-9.25H4Z"/></svg>
         );
-        const Settings = ({ size = 14, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.72V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1-1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
-        );
-        const ExternalLink = ({ size = 14, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></svg>
-        );
+
         const Target = ({ size = 12, className = "" }) => (
             <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
         );
-        const Trophy = ({ size = 14, className = "" }) => (
-            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>
+
+        const EyeIcon = ({ size = 12, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
         );
 
-        const CountdownTimer = ({ targetDate }) => {
-            const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        const XIcon = ({ size = 20, className = "" }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        );
+
+        const ChallengeChrono = ({ startDate }) => {
+            const [timeElapsed, setTimeElapsed] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
             useEffect(() => {
                 const calculateTime = () => {
-                    const difference = +new Date(targetDate) - +new Date();
+                    const now = new Date();
+                    const start = new Date(startDate);
+                    const difference = now - start;
+                    
                     if (difference > 0) {
-                        setTimeLeft({
+                        setTimeElapsed({
                             days: Math.floor(difference / (1000 * 60 * 60 * 24)),
                             hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
                             minutes: Math.floor((difference / 1000 / 60) % 60),
                             seconds: Math.floor((difference / 1000) % 60),
                         });
-                    } else {
-                        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
                     }
                 };
 
                 calculateTime();
                 const timer = setInterval(calculateTime, 1000);
                 return () => clearInterval(timer);
-            }, [targetDate]);
+            }, [startDate]);
 
             const TimeUnit = ({ value, label }) => (
                 <div className="flex flex-col items-center mx-2 sm:mx-4">
-                    <div className="text-3xl sm:text-5xl font-black text-cyan-400 glow-text tabular-nums">
+                    <div className="text-3xl sm:text-5xl font-black text-emerald-400 glow-text tabular-nums">
                         {String(value).padStart(2, '0')}
                     </div>
                     <div className="text-[10px] sm:text-xs text-slate-500 uppercase tracking-[0.2em] mt-1 font-bold">
@@ -96,103 +120,36 @@
             );
 
             return (
-                <div className="flex items-center justify-center bg-slate-900/40 py-6 border-b border-slate-800">
-                    <TimeUnit value={timeLeft.days} label="Jours" />
-                    <div className="text-2xl sm:text-4xl text-slate-700 pb-4">:</div>
-                    <TimeUnit value={timeLeft.hours} label="Heures" />
-                    <div className="text-2xl sm:text-4xl text-slate-700 pb-4">:</div>
-                    <TimeUnit value={timeLeft.minutes} label="Min" />
-                    <div className="text-2xl sm:text-4xl text-slate-700 pb-4">:</div>
-                    <TimeUnit value={timeLeft.seconds} label="Sec" />
+                <div className="flex flex-col items-center bg-slate-900/40 py-6 border-b border-slate-800 shrink-0">
+                    <div className="text-[10px] text-slate-400 uppercase tracking-[0.3em] mb-4 font-bold">Temps écoulé du Challenge</div>
+                    <div className="flex items-center justify-center">
+                        <TimeUnit value={timeElapsed.days} label="Jours" />
+                        <div className="text-2xl sm:text-4xl text-slate-700 pb-4">:</div>
+                        <TimeUnit value={timeElapsed.hours} label="Heures" />
+                        <div className="text-2xl sm:text-4xl text-slate-700 pb-4">:</div>
+                        <TimeUnit value={timeElapsed.minutes} label="Min" />
+                        <div className="text-2xl sm:text-4xl text-slate-700 pb-4">:</div>
+                        <TimeUnit value={timeElapsed.seconds} label="Sec" />
+                    </div>
                 </div>
             );
         };
 
         const App = () => {
-            const [logs, setLogs] = useState([
-                "Initialisation de la stratégie Nakaminsky...",
-                "Système sécurisé v2.7 opérationnel.",
-                "> LANCEMENT AUTOMATIQUE DU FLUX..."
-            ]);
-            const [isMonitoring, setIsMonitoring] = useState(true);
-            const [glitch, setGlitch] = useState(false);
-            const [currentIndex, setCurrentIndex] = useState(0);
-            const scrollRef = useRef(null);
+            const [viewImage, setViewImage] = useState(null);
 
-            const challengeInfo = [
-                "Titre : CHALLENGE x3",
-                "🎯 Objectif : +200%",
-                "⏱️ Durée : 15-60 jours",
-                "🛡 20% de drawdown maximum sur notre stratégie",
-                "⭐️ 0% de commissions sur vos profits pour les 100 premiers investisseurs."
-            ];
-
-            const CTA_MESSAGE = "FIN DE TRANSMISSION. CLIQUEZ ICI POUR NOUS REJOINDRE";
-
-            const generateResultsData = () => {
-                return ["Le challenge n'a pas encore commencé."];
+            const handleOpenImage = (url) => {
+                setViewImage(url);
             };
 
-            useEffect(() => {
-                let interval;
-                if (isMonitoring) {
-                    if (currentIndex < challengeInfo.length) {
-                        interval = setInterval(() => {
-                            setLogs(prev => {
-                                const nextLine = challengeInfo[currentIndex];
-                                return [...prev.slice(-15), `> ${nextLine}`];
-                            });
-                            setCurrentIndex(prev => prev + 1);
-                        }, 1500);
-                    } else {
-                        setIsMonitoring(false);
-                        setLogs(prev => [...prev.slice(-15), `> ${CTA_MESSAGE}`]);
-                    }
-                }
-                return () => clearInterval(interval);
-            }, [isMonitoring, currentIndex]);
-
-            useEffect(() => {
-                if (scrollRef.current) {
-                    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
-                }
-            }, [logs]);
-
-            const addLog = (msg, prefix) => {
-                const p = prefix ? `${prefix} ` : "";
-                setLogs(prev => [...prev.slice(-15), `${p}> ${msg}`]);
-            };
-
-            const handleToggleMonitoring = () => {
-                if (!isMonitoring) {
-                    setCurrentIndex(0);
-                    setIsMonitoring(true);
-                    addLog("RÉACTIVATION DU FLUX DE DONNÉES...");
-                } else {
-                    setIsMonitoring(false);
-                    addLog("INTERRUPTION MANUELLE DU FLUX.");
-                }
-            };
-
-            const triggerCommand = (command, response) => {
-                setGlitch(true);
-                addLog(`COMMANDE: ${command}`);
-                setTimeout(() => {
-                    setGlitch(false);
-                    const lines = Array.isArray(response) ? response : [response];
-                    // On ajoute le message CTA à la fin de chaque commande
-                    const allLines = [...lines, CTA_MESSAGE];
-                    
-                    allLines.forEach((line, index) => {
-                        const logPrefix = command === "RESULTATS" && line.includes(':') ? "[SEMAINE]" : null;
-                        setTimeout(() => addLog(line, logPrefix), index * 400);
-                    });
-                }, 400);
+            const handleCloseImage = () => {
+                setViewImage(null);
             };
 
             return (
-                <div className={`min-h-screen bg-slate-950 text-slate-200 font-mono p-4 flex flex-col items-center justify-center overflow-hidden transition-colors duration-300 ${glitch ? 'bg-cyan-900/20' : ''}`}>
+                <div className="min-h-screen bg-slate-950 text-slate-200 font-mono p-4 flex flex-col items-center justify-center overflow-x-hidden">
                     
+                    {/* Fond Décoratif */}
                     <div className="absolute inset-0 opacity-10 pointer-events-none overflow-hidden">
                         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,#1e293b_0%,#020617_100%)]"></div>
                         <div className="grid grid-cols-12 h-full w-full border-slate-800 border-opacity-20">
@@ -202,8 +159,9 @@
                         </div>
                     </div>
 
-                    <div className="relative z-10 w-full max-w-3xl flex flex-col shadow-2xl animate-in fade-in zoom-in duration-500 py-8">
+                    <div className="relative z-10 w-full max-w-6xl flex flex-col shadow-2xl animate-in fade-in zoom-in duration-500 py-4 sm:py-8">
                         
+                        {/* Bannière Logo */}
                         <div className="w-full h-32 sm:h-44 overflow-hidden rounded-t-lg border-x border-t border-slate-800 bg-slate-900 relative shrink-0">
                             <div className="scanline"></div>
                             <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:20px_20px]"></div>
@@ -224,8 +182,10 @@
                             />
                         </div>
 
-                        <div className="relative w-full bg-slate-900/90 border border-slate-800 rounded-b-lg backdrop-blur-xl overflow-hidden flex flex-col h-[85vh]">
+                        {/* Conteneur Principal */}
+                        <div className="relative w-full bg-slate-900/90 border border-slate-800 rounded-b-lg backdrop-blur-xl overflow-hidden flex flex-col h-[85vh] min-h-[600px]">
                             
+                            {/* Header Status */}
                             <div className="bg-slate-800/50 p-3 border-b border-slate-700 flex justify-between items-center shrink-0">
                                 <div className="flex items-center gap-2">
                                     <Cpu size={18} className="text-cyan-400" />
@@ -233,75 +193,127 @@
                                 </div>
                                 <div className="flex gap-1.5">
                                     <div className="w-2.5 h-2.5 rounded-full bg-slate-700"></div>
-                                    <div className="w-2.5 h-2.5 rounded-full bg-cyan-500 shadow-[0_0_8px_#22d3ee]"></div>
+                                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981] animate-pulse"></div>
                                 </div>
                             </div>
 
-                            <CountdownTimer targetDate="2026-01-15T00:00:00" />
+                            <ChallengeChrono startDate="2026-01-15T00:00:00" />
 
-                            <div className="p-4 bg-slate-800/20 border-b border-slate-700 grid grid-cols-2 md:grid-cols-4 gap-3 shrink-0">
-                                <button 
-                                    onClick={handleToggleMonitoring}
-                                    className={`flex items-center justify-center gap-2 text-[10px] font-bold py-2 px-3 rounded border transition-all uppercase tracking-wider ${isMonitoring ? 'bg-red-950/40 border-red-500/50 text-red-400' : 'bg-emerald-950/40 border-emerald-500/50 text-emerald-400'}`}
-                                >
-                                    <Target size={14} />
-                                    {isMonitoring ? "Arrêter Flux" : "STRATEGIE"}
-                                </button>
-
-                                <button 
-                                    onClick={() => triggerCommand("FONCTIONNEMENT", [
-                                        "⚙️ Nous utilisons le module de copy trading de notre exchange partenaire, il s'agit d'un système de duplication de trade en temps réel sur votre compte.",
-                                        "✋ Vous avez donc la main sur les positions en cours, vous pouvez ajuster le SL/TP, renforcer votre position ou bien la clôturer quand vous souhaitez.",
-                                        "🤗 Vous restez maître de votre capital, nous n'avons pas accès à vos fonds (vous pouvez stopper le copy et effectuer un retrait à tout moment)"
-                                    ])}
-                                    className="flex items-center justify-center gap-2 text-[10px] font-bold py-2 px-3 rounded border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all uppercase tracking-wider"
-                                >
-                                    <Settings size={14} /> Fonctionnement
-                                </button>
-
-                                <button 
-                                    onClick={() => triggerCommand("RESULTATS", generateResultsData())}
-                                    className="flex items-center justify-center gap-2 text-[10px] font-bold py-2 px-3 rounded border border-slate-700 bg-slate-800 hover:bg-slate-700 text-slate-300 transition-all uppercase tracking-wider"
-                                >
-                                    <Trophy size={14} /> RESULTATS
-                                </button>
-
-                                <a 
-                                    href="https://t.me/nakaminsky" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="flex items-center justify-center gap-2 text-[10px] font-bold py-2 px-3 rounded border border-cyan-500/30 bg-cyan-600/10 hover:bg-cyan-600/20 text-cyan-400 transition-all uppercase tracking-wider"
-                                >
-                                    <ExternalLink size={14} /> Support
-                                </a>
+                            <div className="bg-slate-950/40 border-b border-slate-800 flex px-2 shrink-0">
+                                <div className="border-b-2 border-cyan-500 px-6 py-3 text-[10px] font-black text-white uppercase tracking-widest flex items-center gap-2">
+                                    <div className="w-1.5 h-1.5 rounded-full bg-cyan-500"></div>
+                                    Historique de trading
+                                </div>
                             </div>
 
-                            <div 
-                                ref={scrollRef}
-                                className="flex-1 overflow-y-auto bg-black/60 p-6 font-mono text-sm space-y-2 scrollbar-thin scrollbar-thumb-slate-800"
-                            >
-                                {logs.map((log, i) => (
-                                    <div key={i} className="flex gap-3 border-l border-slate-800 pl-3 py-1 hover:bg-white/5 transition-colors">
-                                        <span className="text-slate-600 shrink-0 select-none">#{(i + 1).toString().padStart(3, '0')}</span>
-                                        <span className={`${
-                                            log.includes('COMMANDE') ? 'text-yellow-400 font-bold' : 
-                                            log.includes('CHALLENGE') ? 'text-white font-black underline' :
-                                            log.includes('⭐️') ? 'text-emerald-400' :
-                                            log.includes('[SEMAINE]') ? (log.includes('-') ? 'text-rose-400' : 'text-emerald-400') :
-                                            log.includes('FIN DE TRANSMISSION') ? 'text-red-400 font-bold italic' :
-                                            log.includes('Objectif') ? 'text-cyan-400' : 
-                                            log.includes("n'a pas encore commencé") ? 'text-yellow-500 font-bold italic' : 'text-slate-300'
-                                        }`}>
-                                            {log.includes("CLIQUEZ ICI") ? (
-                                                <React.Fragment>
-                                                    {log.split("CLIQUEZ ICI")[0]}
-                                                    <a href="https://t.me/nakaminsky" target="_blank" rel="noopener noreferrer" className="underline hover:text-cyan-400 decoration-cyan-500 font-bold">CLIQUEZ ICI</a>
-                                                    {log.split("CLIQUEZ ICI")[1]}
-                                                </React.Fragment>
-                                            ) : log}
-                                        </span>
-                                    </div>
-                                ))}
+                            {/* Contenu Terminal (Tableau) */}
+                            <div className="flex-1 overflow-auto scrollbar-thin bg-black/40">
+                                <table className="w-full trading-table">
+                                    <thead className="sticky top-0 z-20">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Side</th>
+                                            <th>Pair</th>
+                                            <th>Size</th>
+                                            <th>Price</th>
+                                            <th>Amount</th>
+                                            <th>Leverage</th>
+                                            <th>PnL (%)</th>
+                                            <th>PNL</th>
+                                            <th>Preuve</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="text-slate-300">
+                                        {/* Row 1: AXS */}
+                                        <tr className="hover:bg-white/5 transition-colors">
+                                            <td>21/01/2026 3:05:24 AM</td>
+                                            <td>
+                                                <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[9px] border border-slate-700">CLOSE</span>
+                                            </td>
+                                            <td>
+                                                <span className="text-rose-400 font-bold tracking-tighter uppercase">SHORT</span>
+                                            </td>
+                                            <td className="font-bold text-white">AXS/USDT</td>
+                                            <td>18400.004600</td>
+                                            <td>$2.1450</td>
+                                            <td>$2000.00</td>
+                                            <td>20x cross</td>
+                                            <td>
+                                                <span className="text-emerald-400 font-bold">+26.60%</span>
+                                            </td>
+                                            <td>
+                                                <span className="text-emerald-400 font-black text-xs">+$531.99</span>
+                                            </td>
+                                            <td>
+                                                <button 
+                                                    onClick={() => handleOpenImage('pnl-summary-1768965008300.jpg')}
+                                                    className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[10px] font-bold rounded border border-slate-700 transition-all uppercase tracking-tighter"
+                                                >
+                                                    <EyeIcon size={10} /> VOIR
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        {/* Row 2: PUMP */}
+                                        <tr className="hover:bg-white/5 transition-colors">
+                                            <td>21/01/2026 2:20:54 AM</td>
+                                            <td>
+                                                <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[9px] border border-slate-700">CLOSE</span>
+                                            </td>
+                                            <td>
+                                                <span className="text-emerald-400 font-bold tracking-tighter uppercase">LONG</span>
+                                            </td>
+                                            <td className="font-bold text-white">PUMP/USDT</td>
+                                            <td>53417628.238864</td>
+                                            <td>$0.0025</td>
+                                            <td>$2000.00</td>
+                                            <td>65x cross</td>
+                                            <td>
+                                                <span className="text-emerald-400 font-bold">+169.19%</span>
+                                            </td>
+                                            <td>
+                                                <span className="text-emerald-400 font-black text-xs">+$3383.82</span>
+                                            </td>
+                                            <td>
+                                                <button 
+                                                    onClick={() => handleOpenImage('pnl-summary-1768964999566.png')}
+                                                    className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[10px] font-bold rounded border border-slate-700 transition-all uppercase tracking-tighter"
+                                                >
+                                                    <EyeIcon size={10} /> VOIR
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        {/* Row 3: BTC */}
+                                        <tr className="hover:bg-white/5 transition-colors">
+                                            <td>16/01/2026 4:33:46 PM</td>
+                                            <td>
+                                                <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[9px] border border-slate-700">CLOSE</span>
+                                            </td>
+                                            <td>
+                                                <span className="text-rose-400 font-bold tracking-tighter uppercase">SHORT</span>
+                                            </td>
+                                            <td className="font-bold text-white">BTC / USDT</td>
+                                            <td>3.148379</td>
+                                            <td>$94485.9000</td>
+                                            <td>$5000.00</td>
+                                            <td>60x isolated</td>
+                                            <td>
+                                                <span className="text-emerald-400 font-bold">+50.45%</span>
+                                            </td>
+                                            <td>
+                                                <span className="text-emerald-400 font-black text-xs">+$2522.58</span>
+                                            </td>
+                                            <td>
+                                                <button 
+                                                    onClick={() => handleOpenImage('pnl-summary-1768964988248.jpg')}
+                                                    className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[10px] font-bold rounded border border-slate-700 transition-all uppercase tracking-tighter"
+                                                >
+                                                    <EyeIcon size={10} /> VOIR
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
 
                             <div className="p-4 bg-slate-950/50 border-t border-slate-800 flex flex-col items-center gap-4 shrink-0">
@@ -309,13 +321,13 @@
                                     href="https://t.me/nakaminsky" 
                                     target="_blank" 
                                     rel="noopener noreferrer"
-                                    className="w-full max-w-sm bg-cyan-600 hover:bg-cyan-500 text-white text-[11px] font-black py-3 rounded transition-all flex items-center justify-center gap-3 uppercase tracking-[0.2em] shadow-lg shadow-cyan-900/40 active:scale-95 glow-text btn-glow"
+                                    className="w-full max-w-sm bg-cyan-600 hover:bg-cyan-500 text-white text-[11px] font-black py-4 rounded transition-all flex items-center justify-center gap-3 uppercase tracking-[0.2em] shadow-lg shadow-cyan-900/40 active:scale-95 glow-text btn-glow"
                                 >
                                     <Zap size={16} fill="currentColor" className="animate-pulse" /> JE SOUHAITE INVESTIR
                                 </a>
                                 
                                 <div className="w-full flex justify-center gap-6 text-[9px] text-slate-500 tracking-[0.2em] uppercase">
-                                    <span className="flex items-center gap-1.5">
+                                    <span className="flex items-center gap-1.5 font-bold">
                                         <Target size={12} className="text-cyan-500" />
                                         Nakaminsky Challenge 3X
                                     </span>
@@ -324,6 +336,35 @@
                             </div>
                         </div>
                     </div>
+
+                    {/* Modal de prévisualisation d'image */}
+                    {viewImage && (
+                        <div 
+                            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300"
+                            onClick={handleCloseImage}
+                        >
+                            <div 
+                                className="relative max-w-2xl w-full bg-slate-900 rounded-lg border border-slate-700 shadow-2xl overflow-hidden animate-in zoom-in duration-300"
+                                onClick={(e) => e.stopPropagation()}
+                            >
+                                <div className="absolute top-2 right-2 z-10">
+                                    <button 
+                                        onClick={handleCloseImage}
+                                        className="bg-black/50 hover:bg-black/80 text-white p-1.5 rounded-full transition-colors"
+                                    >
+                                        <XIcon size={20} />
+                                    </button>
+                                </div>
+                                <div className="p-2">
+                                    <img 
+                                        src={viewImage} 
+                                        alt="Preuve PnL" 
+                                        className="w-full h-auto max-h-[85vh] object-contain rounded"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
             );
         };
