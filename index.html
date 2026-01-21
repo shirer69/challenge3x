@@ -38,6 +38,7 @@
         .trading-table {
             border-collapse: separate;
             border-spacing: 0;
+            width: 100%;
         }
         .trading-table th {
             font-weight: 800;
@@ -167,6 +168,7 @@
             return (
                 <div className="min-h-screen bg-slate-950 text-slate-200 font-mono p-4 flex flex-col items-center justify-center overflow-x-hidden">
                     
+                    {/* Fond Décoratif */}
                     <div className="absolute inset-0 opacity-10 pointer-events-none overflow-hidden">
                         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,#1e293b_0%,#020617_100%)]"></div>
                         <div className="grid grid-cols-12 h-full w-full border-slate-800 border-opacity-20">
@@ -178,28 +180,31 @@
 
                     <div className="relative z-10 w-full max-w-6xl flex flex-col shadow-2xl animate-in fade-in zoom-in duration-500 py-4 sm:py-6">
                         
-                        <div className="w-full h-32 sm:h-44 overflow-hidden rounded-t-lg border-x border-t border-slate-800 bg-slate-900 relative shrink-0">
+                        {/* Bannière Header avec Logo Redimensionné à gauche */}
+                        <div className="w-full h-24 sm:h-32 overflow-hidden rounded-t-lg border-x border-t border-slate-800 bg-slate-900 relative shrink-0 flex items-center p-4 sm:p-6">
                             <div className="scanline"></div>
                             <div className="absolute inset-0 opacity-20 bg-[linear-gradient(to_right,#1e293b_1px,transparent_1px),linear-gradient(to_bottom,#1e293b_1px,transparent_1px)] bg-[size:20px_20px]"></div>
                             <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 to-transparent"></div>
                             
                             <img 
                                 src="logo.png" 
-                                alt="Bannière Nakaminsky" 
-                                className="relative z-10 w-full h-full object-cover object-center"
+                                alt="Logo Nakaminsky" 
+                                className="relative z-10 h-full w-auto object-contain max-h-16 sm:max-h-24"
                                 onError={(e) => {
                                     e.target.style.display = 'none';
                                     const parent = e.target.parentElement;
                                     const fallback = document.createElement('div');
-                                    fallback.className = "absolute inset-0 flex items-center justify-center bg-slate-900";
-                                    fallback.innerHTML = `<span class="text-cyan-500/30 font-black text-4xl tracking-[0.5em] uppercase italic text-center px-4">Nakaminsky</span>`;
+                                    fallback.className = "relative z-10 flex items-center";
+                                    fallback.innerHTML = `<span class="text-cyan-400 font-black text-2xl sm:text-4xl tracking-tighter uppercase italic glow-text">Nakaminsky</span>`;
                                     parent.appendChild(fallback);
                                 }}
                             />
                         </div>
 
+                        {/* Conteneur Principal */}
                         <div className="relative w-full bg-slate-900/90 border border-slate-800 rounded-b-lg backdrop-blur-xl overflow-hidden flex flex-col h-[92vh] min-h-[900px]">
                             
+                            {/* Header Status */}
                             <div className="bg-slate-800/50 p-3 border-b border-slate-700 flex justify-between items-center shrink-0">
                                 <div className="flex items-center gap-2">
                                     <Cpu size={18} className="text-cyan-400" />
@@ -220,8 +225,9 @@
                                 </div>
                             </div>
 
+                            {/* Contenu Terminal (Tableau + Résumé sans espace) */}
                             <div className="flex-1 overflow-auto scrollbar-thin bg-black/40">
-                                <table className="w-full trading-table">
+                                <table className="trading-table">
                                     <thead className="sticky top-0 z-20">
                                         <tr>
                                             <th>Date</th>
@@ -240,112 +246,68 @@
                                     <tbody className="text-slate-300">
                                         <tr className="hover:bg-white/5 transition-colors">
                                             <td>21/01/2026 3:05:24 AM</td>
-                                            <td>
-                                                <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[9px] border border-slate-700">CLOSE</span>
-                                            </td>
-                                            <td>
-                                                <span className="text-rose-400 font-bold tracking-tighter uppercase">SHORT</span>
-                                            </td>
+                                            <td><span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[9px] border border-slate-700">CLOSE</span></td>
+                                            <td><span className="text-rose-400 font-bold tracking-tighter uppercase">SHORT</span></td>
                                             <td className="font-bold text-white">AXS/USDT</td>
                                             <td>18400.004600</td>
                                             <td>$2.1450</td>
                                             <td>$2000.00</td>
                                             <td>20x cross</td>
+                                            <td><span className="text-emerald-400 font-bold">+26.60%</span></td>
+                                            <td><span className="text-emerald-400 font-black text-xs">+2.54%</span></td>
                                             <td>
-                                                <span className="text-emerald-400 font-bold">+26.60%</span>
-                                            </td>
-                                            <td>
-                                                <span className="text-emerald-400 font-black text-xs">+2.54%</span>
-                                            </td>
-                                            <td>
-                                                <button 
-                                                    onClick={() => handleOpenImage('4.png')}
-                                                    className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[10px] font-bold rounded border border-slate-700 transition-all uppercase tracking-tighter"
-                                                >
+                                                <button onClick={() => handleOpenImage('4.png')} className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[10px] font-bold rounded border border-slate-700 transition-all uppercase tracking-tighter">
                                                     <EyeIcon size={10} /> VOIR
                                                 </button>
                                             </td>
                                         </tr>
                                         <tr className="hover:bg-white/5 transition-colors">
                                             <td>21/01/2026 3:01:19 AM</td>
-                                            <td>
-                                                <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[9px] border border-slate-700">CLOSE</span>
-                                            </td>
-                                            <td>
-                                                <span className="text-rose-400 font-bold tracking-tighter uppercase">SHORT</span>
-                                            </td>
+                                            <td><span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[9px] border border-slate-700">CLOSE</span></td>
+                                            <td><span className="text-rose-400 font-bold tracking-tighter uppercase">SHORT</span></td>
                                             <td className="font-bold text-white uppercase">AXS/ USDT</td>
                                             <td>23074.267761</td>
                                             <td>$2.1620</td>
                                             <td>$1000.00</td>
-                                            <td>50xcross</td>
+                                            <td>50x cross</td>
+                                            <td><span className="text-emerald-400 font-bold">+11.34%</span></td>
+                                            <td><span className="text-emerald-400 font-black text-xs">+1.07%</span></td>
                                             <td>
-                                                <span className="text-emerald-400 font-bold">+11.34%</span>
-                                            </td>
-                                            <td>
-                                                <span className="text-emerald-400 font-black text-xs">+1.07%</span>
-                                            </td>
-                                            <td>
-                                                <button 
-                                                    onClick={() => handleOpenImage('3.png')}
-                                                    className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[10px] font-bold rounded border border-slate-700 transition-all uppercase tracking-tighter"
-                                                >
+                                                <button onClick={() => handleOpenImage('3.png')} className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[10px] font-bold rounded border border-slate-700 transition-all uppercase tracking-tighter">
                                                     <EyeIcon size={10} /> VOIR
                                                 </button>
                                             </td>
                                         </tr>
                                         <tr className="hover:bg-white/5 transition-colors">
                                             <td>21/01/2026 2:20:54 AM</td>
-                                            <td>
-                                                <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[9px] border border-slate-700">CLOSE</span>
-                                            </td>
-                                            <td>
-                                                <span className="text-emerald-400 font-bold tracking-tighter uppercase">LONG</span>
-                                            </td>
+                                            <td><span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[9px] border border-slate-700">CLOSE</span></td>
+                                            <td><span className="text-emerald-400 font-bold tracking-tighter uppercase">LONG</span></td>
                                             <td className="font-bold text-white">PUMP/USDT</td>
                                             <td>53417628.238864</td>
                                             <td>$0.0025</td>
                                             <td>$2000.00</td>
                                             <td>65x cross</td>
+                                            <td><span className="text-emerald-400 font-bold">+169.19%</span></td>
+                                            <td><span className="text-emerald-400 font-black text-xs">+14.08%</span></td>
                                             <td>
-                                                <span className="text-emerald-400 font-bold">+169.19%</span>
-                                            </td>
-                                            <td>
-                                                <span className="text-emerald-400 font-black text-xs">+14.08%</span>
-                                            </td>
-                                            <td>
-                                                <button 
-                                                    onClick={() => handleOpenImage('2.png')}
-                                                    className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[10px] font-bold rounded border border-slate-700 transition-all uppercase tracking-tighter"
-                                                >
+                                                <button onClick={() => handleOpenImage('2.png')} className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[10px] font-bold rounded border border-slate-700 transition-all uppercase tracking-tighter">
                                                     <EyeIcon size={10} /> VOIR
                                                 </button>
                                             </td>
                                         </tr>
                                         <tr className="hover:bg-white/5 transition-colors">
                                             <td>16/01/2026 4:33:46 PM</td>
-                                            <td>
-                                                <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[9px] border border-slate-700">CLOSE</span>
-                                            </td>
-                                            <td>
-                                                <span className="text-rose-400 font-bold tracking-tighter uppercase">SHORT</span>
-                                            </td>
+                                            <td><span className="px-2 py-0.5 rounded bg-slate-800 text-slate-400 text-[9px] border border-slate-700">CLOSE</span></td>
+                                            <td><span className="text-rose-400 font-bold tracking-tighter uppercase">SHORT</span></td>
                                             <td className="font-bold text-white">BTC / USDT</td>
                                             <td>3.148379</td>
                                             <td>$94485.9000</td>
                                             <td>$5000.00</td>
                                             <td>60x isolated</td>
+                                            <td><span className="text-emerald-400 font-bold">+50.45%</span></td>
+                                            <td><span className="text-emerald-400 font-black text-xs">+4.04%</span></td>
                                             <td>
-                                                <span className="text-emerald-400 font-bold">+50.45%</span>
-                                            </td>
-                                            <td>
-                                                <span className="text-emerald-400 font-black text-xs">+4.04%</span>
-                                            </td>
-                                            <td>
-                                                <button 
-                                                    onClick={() => handleOpenImage('1.png')}
-                                                    className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[10px] font-bold rounded border border-slate-700 transition-all uppercase tracking-tighter"
-                                                >
+                                                <button onClick={() => handleOpenImage('1.png')} className="flex items-center gap-1.5 px-3 py-1 bg-slate-800 hover:bg-slate-700 text-cyan-400 text-[10px] font-bold rounded border border-slate-700 transition-all uppercase tracking-tighter">
                                                     <EyeIcon size={10} /> VOIR
                                                 </button>
                                             </td>
@@ -353,16 +315,20 @@
                                     </tbody>
                                 </table>
 
-                                {/* Bloc Résumé Challenge intégré au flux du tableau */}
+                                {/* Bloc Résumé Challenge collé au tableau */}
                                 <div className="bg-slate-900/80 border-t border-slate-800 p-6">
                                     <div className="flex items-center gap-2 mb-4">
                                         <BarChartIcon className="text-emerald-400" />
                                         <h3 className="text-xs font-black uppercase tracking-[0.2em] text-slate-300">Résumé du Challenge</h3>
                                     </div>
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         <div className="bg-slate-950/50 p-4 rounded border border-slate-800/50">
                                             <div className="text-[10px] text-slate-500 uppercase font-bold mb-1">Stratégie de Risque</div>
                                             <div className="text-xs text-slate-300 font-medium italic">Intérêts composés : Allocation de <span className="text-cyan-400 font-bold">8% du capital actuel</span> par trade.</div>
+                                        </div>
+                                        <div className="bg-rose-950/20 p-4 rounded border border-rose-500/20 flex flex-col justify-center">
+                                            <div className="text-[10px] text-rose-500 uppercase font-bold mb-1">Drawdown Max</div>
+                                            <div className="text-xl font-black text-rose-400">14% <span className="text-[10px] font-normal text-slate-500 uppercase tracking-tighter ml-1">du capital</span></div>
                                         </div>
                                         <div className="bg-emerald-950/20 p-4 rounded border border-emerald-500/20 flex flex-col justify-center">
                                             <div className="text-[10px] text-emerald-500 uppercase font-bold mb-1">Performance Cumulée</div>
@@ -373,60 +339,32 @@
                             </div>
 
                             <div className="p-4 bg-slate-950/50 border-t border-slate-800 flex flex-col items-center gap-4 shrink-0">
-                                <a 
-                                    href="https://t.me/nakaminsky" 
-                                    target="_blank" 
-                                    rel="noopener noreferrer"
-                                    className="w-full max-w-sm bg-cyan-600 hover:bg-cyan-500 text-white text-[11px] font-black py-4 rounded transition-all flex items-center justify-center gap-3 uppercase tracking-[0.2em] shadow-lg shadow-cyan-900/40 active:scale-95 glow-text btn-glow"
-                                >
+                                <a href="https://t.me/nakaminsky" target="_blank" rel="noopener noreferrer" className="w-full max-w-sm bg-cyan-600 hover:bg-cyan-500 text-white text-[11px] font-black py-4 rounded transition-all flex items-center justify-center gap-3 uppercase tracking-[0.2em] shadow-lg shadow-cyan-900/40 active:scale-95 glow-text btn-glow">
                                     <Zap size={16} fill="currentColor" className="animate-pulse" /> JE SOUHAITE INVESTIR
                                 </a>
-                                
                                 <div className="w-full flex justify-center gap-6 text-[9px] text-slate-500 tracking-[0.2em] uppercase">
-                                    <span className="flex items-center gap-1.5 font-bold">
-                                        <Target size={12} className="text-cyan-500" />
-                                        Nakaminsky Challenge 3X
-                                    </span>
+                                    <span className="flex items-center gap-1.5 font-bold"><Target size={12} className="text-cyan-500" /> Nakaminsky Challenge 3X</span>
                                     <span className="text-slate-600 hidden sm:inline">ID: NAK-X-882</span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Modal de prévisualisation d'image */}
+                    {/* Modal de prévisualisation */}
                     {viewImage && (
-                        <div 
-                            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300"
-                            onClick={handleCloseImage}
-                        >
-                            <div 
-                                className="relative max-w-2xl w-full bg-slate-900 rounded-lg border border-slate-700 shadow-2xl overflow-hidden animate-in zoom-in duration-300"
-                                onClick={(e) => e.stopPropagation()}
-                            >
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-300" onClick={handleCloseImage}>
+                            <div className="relative max-w-2xl w-full bg-slate-900 rounded-lg border border-slate-700 shadow-2xl overflow-hidden animate-in zoom-in duration-300" onClick={(e) => e.stopPropagation()}>
                                 <div className="absolute top-2 right-2 z-10">
-                                    <button 
-                                        onClick={handleCloseImage}
-                                        className="bg-black/50 hover:bg-black/80 text-white p-1.5 rounded-full transition-colors"
-                                    >
-                                        <XIcon size={20} />
-                                    </button>
+                                    <button onClick={handleCloseImage} className="bg-black/50 hover:bg-black/80 text-white p-1.5 rounded-full transition-colors"><XIcon size={20} /></button>
                                 </div>
                                 <div className="p-4 flex flex-col items-center justify-center min-h-[300px]">
-                                    <img 
-                                        src={viewImage} 
-                                        alt="Preuve PnL" 
-                                        className="w-full h-auto max-h-[85vh] object-contain rounded shadow-lg"
-                                        onError={(e) => {
-                                            e.target.style.display = 'none';
-                                            const errorMsg = document.createElement('div');
-                                            errorMsg.className = "flex flex-col items-center gap-4 p-8 text-center";
-                                            errorMsg.innerHTML = `
-                                                <div class="text-rose-500 font-bold uppercase tracking-widest">Image non trouvée</div>
-                                                <div class="text-xs text-slate-500">Vérifiez que le fichier <b>${viewImage}</b> est présent sur votre serveur Git.</div>
-                                            `;
-                                            e.target.parentElement.appendChild(errorMsg);
-                                        }}
-                                    />
+                                    <img src={viewImage} alt="Preuve PnL" className="w-full h-auto max-h-[85vh] object-contain rounded shadow-lg" onError={(e) => {
+                                        e.target.style.display = 'none';
+                                        const errorMsg = document.createElement('div');
+                                        errorMsg.className = "flex flex-col items-center gap-4 p-8 text-center";
+                                        errorMsg.innerHTML = `<div class="text-rose-500 font-bold uppercase tracking-widest">Image non trouvée</div><div class="text-xs text-slate-500">Vérifiez que le fichier <b>${viewImage}</b> est présent sur votre serveur Git.</div>`;
+                                        e.target.parentElement.appendChild(errorMsg);
+                                    }} />
                                 </div>
                             </div>
                         </div>
